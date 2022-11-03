@@ -15,8 +15,9 @@ package org.leisure;
  */
 
 public class OneSolution {
+    public static void main(String[] args) {
 
-
+    }
 }
 
 
