@@ -18,6 +18,7 @@ public class OneSolution {
     public static void main(String[] args) {
         for (int i = 0; i < args.length; i++) {
             System.out.println("你好");
+            System.out.println("你好");
         }
     }
 }
