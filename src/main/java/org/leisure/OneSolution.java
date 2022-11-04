@@ -15,11 +15,46 @@ package org.leisure;
  */
 
 public class OneSolution {
-    public static void main(String[] args) {
-        for (int i = 0; i < args.length; i++) {
-            System.out.println("你好");
-            System.out.println("你好");
+    /**
+     * 暴力解决方法
+     * 时间复杂对: (n^2) 空间复杂度:O(1)
+     * @param nums 数组
+     * @param target 目标数
+     * @return 返回结果
+     */
+    public static int[] twoSum(int[] nums, int target) {
+        //第2个整数
+        int target2;
+        for (int i = 0; i < nums.length; i++) {
+            //目标值 减 第1个整数 得到第二个整数
+            target2 = target - nums[i];
+            for (int j = i + 1; j < nums.length; j++) {
+                if (target2 == nums[j]){
+                    return new int[]{i, j};
+                }
+            }
         }
+        return new int[0];
+    }
+
+    /**
+     * 进阶解决方法
+     * 时间复杂对: (n) 空间复杂度:O(n)
+     * 可以使用散列表(Hash)的数据结构来解决问题。
+     * 问题：hash冲突
+     * @param nums 数组
+     * @param target 目标数
+     * @return 返回结果
+     */
+    public static int[] AdvanceTwoSum(int[] nums, int target) {
+
+        return new int[0];
+    }
+
+
+
+    public static void main(String[] args) {
+        twoSum(new int[]{3,2,4}, 6);
     }
 }
 
