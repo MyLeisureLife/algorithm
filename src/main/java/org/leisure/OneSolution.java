@@ -1,5 +1,8 @@
 package org.leisure;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * LeetCode: 两数之和
  * 题目: 给定一个整数数组 nums和一个整数目标值 target，请你在该数组中找出 和为目标值 target 的那两个整数，并返回它们的数组下标。
@@ -17,7 +20,7 @@ package org.leisure;
 public class OneSolution {
     /**
      * 暴力解决方法
-     * 时间复杂对: (n^2) 空间复杂度:O(1)
+     * 时间复杂对: (n^2) 空间复杂度:O(1)   运行时间: 38ms 运行内存 41.6MB
      * @param nums 数组
      * @param target 目标数
      * @return 返回结果
@@ -39,7 +42,7 @@ public class OneSolution {
 
     /**
      * 进阶解决方法
-     * 时间复杂对: (n) 空间复杂度:O(n)
+     * 时间复杂对: (n) 空间复杂度:O(n)    运行时间：2ms  运行内存 41.4MB
      * 可以使用散列表(Hash)的数据结构来解决问题。
      * 问题：hash冲突
      * @param nums 数组
@@ -47,7 +50,15 @@ public class OneSolution {
      * @return 返回结果
      */
     public static int[] AdvanceTwoSum(int[] nums, int target) {
-
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int target_2;
+        for (int i = 0; i < nums.length; i++) {
+            target_2 = target - nums[i];
+            if (map.get(target_2) != null ){
+                return new int[]{i, map.get(target_2)};
+            }
+            map.put(nums[i], i);  //我们需要的下标，所以需要将下标存入value中，因为题目中给定了只有一个结果，所以这里不会存入相同的key.
+        }
         return new int[0];
     }
 
