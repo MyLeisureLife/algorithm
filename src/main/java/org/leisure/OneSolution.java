@@ -20,7 +20,7 @@ import java.util.Map;
 public class OneSolution {
     /**
      * 暴力解决方法
-     * 时间复杂对: (n^2) 空间复杂度:O(1)   运行时间: 38ms 运行内存 41.6MB
+     * 时间复杂对: O(n^2) 空间复杂度:O(1)   运行时间: 38ms 运行内存 41.6MB
      * @param nums 数组
      * @param target 目标数
      * @return 返回结果
@@ -42,7 +42,7 @@ public class OneSolution {
 
     /**
      * 进阶解决方法
-     * 时间复杂对: (n) 空间复杂度:O(n)    运行时间：2ms  运行内存 41.4MB
+     * 时间复杂对: O(n) 空间复杂度:O(n)    运行时间：2ms  运行内存 41.4MB
      * 可以使用散列表(Hash)的数据结构来解决问题。
      * 问题：hash冲突
      * @param nums 数组
