@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Author: a7606
+ * Author: MyLeisureLife
  * Date: 2023/1/30:21:37:18 星期一
  *
  * LeetCode: 两数之和
@@ -20,7 +20,6 @@ import java.util.Map;
  */
 public class Algorithm_1_LeetCode {
     /**
-     * 111111111111111111
      * 暴力解决方法
      * 时间复杂对: O(n^2) 空间复杂度:O(1)   运行时间: 38ms 运行内存 41.6MB
      * @param nums 数组
