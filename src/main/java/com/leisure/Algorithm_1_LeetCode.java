@@ -21,6 +21,7 @@ import java.util.Map;
 public class Algorithm_1_LeetCode {
     /**
      * 暴力解决方法
+     *
      * 时间复杂对: O(n^2) 空间复杂度:O(1)   运行时间: 38ms 运行内存 41.6MB
      * @param nums 数组
      * @param target 目标数
