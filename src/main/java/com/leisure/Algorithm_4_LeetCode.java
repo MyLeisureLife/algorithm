@@ -77,17 +77,68 @@ public class Algorithm_4_LeetCode {
     }
 
     /**
+     * 我自己实现的代码
      * 使用数组下标移动的方法求出中位数，不使用数组合并方法
      * @param nums1 数组1
      * @param nums2 数组2
      * @return 中位数
      */
-    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        //计算出中位数的位置
+        int medianIndex = (nums1.length + nums2.length + 1) / 2 - 1;
         //创建数组的两个下标用于移动
+        int n1 = 0, n2 = 0;
+        while (medianIndex > 0){
+            if(n1 < nums1.length && n2 < nums2.length){
+                if (nums1[n1] < nums2[n2]){
+                    n1 ++;
+                }else {
+                    n2 ++;
+                }
+            }else if (n1 >= nums1.length){
+                n2 ++;
+            } else {
+                n1 ++;
+            }
+            medianIndex --;
+        }
 
-        return 0;
+        if (n1 == nums1.length){
+            if ((nums1.length + nums2.length) % 2 == 0){
+                return (nums2[n2] + nums2[n2 + 1]) / 2.0;
+            }else {
+                return nums2[n2];
+            }
+        }
+
+        if (n2 == nums2.length){
+            if ((nums1.length + nums2.length) % 2 == 0){
+                return (nums1[n1] + nums1[n1 + 1]) / 2.0;
+            }else {
+                return nums1[n1];
+            }
+        }
+
+        if ((nums1.length + nums2.length) % 2 == 0){
+            double a = (nums1[n1] + nums2[n2]) / 2.0;
+            int b =  Math.min(nums1[n1], nums2[n2]);
+            if (nums1[n1] < nums2[n2]){
+                n1 ++;
+            }else {
+                n2 ++;
+            }
+            if(n1 == nums1.length || n2 == nums2.length){
+                return a;
+            }
+            int c =  Math.min(nums1[n1], nums2[n2]);
+            return (b + c) / 2.0;
+        }else {
+            return Math.min(nums1[n1], nums2[n2]);
+        }
     }
-    public static void main(String[] args) {
 
+
+    public static void main(String[] args) {
+        findMedianSortedArrays(new int[]{1, 2},new int[]{-1, 3});
     }
 }
