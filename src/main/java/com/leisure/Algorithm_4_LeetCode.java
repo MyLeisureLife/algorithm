@@ -146,17 +146,40 @@ public class Algorithm_4_LeetCode {
      * 查找 中位数 我们可以将起看成查找第K小的数
      * 这里K又分为两种情况，第一种情况，当 nums1.length + nums2.length 的长度为偶数时，这时就有 两个 K 需要求出来然后除以2
      *                   第二种情况，当 nums1.length + nums2.length 的长度为奇数时，这时就有 一个 K 需要求出来。
-     * 偶数时(K表示是在数组中的下标)  K1 = (nums1.length + nums2.length) / 2 - 1, K2 = (nums1.length + nums2.length) / 2
-     * 奇数时(K表示是在数组中的下标)  K = (nums1.length + nums2.length)  / 2
+     * 偶数时(K表示是在数组中的下标)  K1 = (nums1.length + nums2.length + 1) / 2 , K2 = (nums1.length + nums2.length + 2) / 2
+     * 奇数时(K表示是在数组中的下标)  K = (nums1.length + nums2.length + 1)  / 2
+     *
+     * 自己写的存在问题：
+     *  1、代码不够节俭，重复代码较多。
+     *  2、边界值考虑不全
+     *  时间复杂度O(log (m+n)) 空间复杂度 O(1)
      * @param nums1 数组1
      * @param nums2 数组2
      * @return 中位数
      */
     public static double findMedianSortedArrays(int[] nums1, int[] nums2){
-        int k1 = (nums1.length + nums2.length)  / 2 - 1;
-        int k2 = (nums1.length + nums2.length)  / 2;
+        int nums1Length = nums1.length;
+        int nums2Length = nums2.length;
+        // 防止出现空数组
+        if(nums1Length == 0){
+            if(nums2Length % 2 == 0){
+                return (nums2[nums2Length / 2 - 1] + nums2[nums2Length / 2]) / 2.0;
+            }else {
+                return nums2[nums2Length / 2];
+            }
+        }
+        if(nums2Length == 0){
+            if(nums1Length % 2 == 0){
+                return (nums1[nums1Length / 2 - 1] + nums1[nums1Length / 2]) / 2.0;
+            }else {
+                return nums1[nums1Length / 2];
+            }
+        }
 
-        if ((nums1.length + nums2.length) % 2 == 0){
+        int k1 = (nums1Length + nums2Length + 1)  / 2;
+        int k2 = (nums1Length + nums2Length + 2)  / 2;
+
+        if ((nums1Length + nums2Length) % 2 == 0){
             return (findMinimumTheKth(nums1,nums2,k1) + findMinimumTheKth(nums1, nums2, k2)) / 2.0;
         }else {
             return findMinimumTheKth(nums1,nums2,k1);
@@ -171,45 +194,62 @@ public class Algorithm_4_LeetCode {
      * @return 数
      */
     public static int findMinimumTheKth(int[] nums1, int[] nums2, int k){
+        //记录总的
+        int sum = k;
         //创建两个下标用于在两个数组中移动
         int n1 = 0, n2 = 0;
         int half = -1;
-        while (k != 0 ){
+        while (half != 0 && k != 1){
+            // 每次去掉数组前面 half 个
             half = k / 2;
+            // 还剩下几个没有被去掉，需要留一个表示它自己
             k = k - half;
 
 
-            if (nums1.length <= half){
-                if (nums1[nums1.length - 1] > nums2[half]){
-                    n2 = n2 + half + 1;
+            if (nums1.length <= half && k != 1){
+                if (nums1[nums1.length - 1] > nums2[half - 1]){
+                    n2 = half + n2;
                     continue;
                 }else {
-                    n2 = n2 + (k - nums1.length);
+                    n2 = n2 + (sum - nums1.length) - 1;
                     return nums2[n2];
                 }
-            }else if (nums2.length <= half){
-                if (nums1[half] < nums2[nums2.length - 1]){
-                    n1 = n1 + half + 1;
+            }else if (nums2.length <= half && k != 1){
+                if (nums2[nums2.length - 1] > nums1[half - 1]){
+                    n1 = half + n1;
                     continue;
                 }else {
-                    n1 = n1 + (k - nums1.length);
-                    return nums2[n1];
+                    n1 = n1 + (sum - nums2.length) - 1;
+                    return nums1[n1];
                 }
             }
 
-            if (nums1[n1] < nums2[n2]){
-                n1 = n1 + half + 1;
-            }else {
-                n2 = n2 + half + 1;
+            if(nums1.length == n1){
+                n2 = n2 + (sum - nums1.length) - 1;
+                return nums2[n2];
+            }
+            if (nums2.length == n2){
+                n1 = n1 + (sum - nums2.length) - 1;
+                return nums1[n1];
             }
 
-
+            if (nums1[n1 + half - 1] < nums2[n2 + half - 1]){
+                n1 = n1 + half;
+            }else {
+                n2 = n2 + half;
+            }
+        }
+        if(nums1.length == n1){
+            return nums2[n2];
+        }
+        if (nums2.length == n2){
+            return nums1[n1];
         }
         return Math.min(nums1[n1], nums2[n2]);
     }
 
 
     public static void main(String[] args) {
-        findMedianSortedArrays(new int[]{1, 2},new int[]{3,4});
+        findMedianSortedArrays(new int[]{1,2, 3},new int[]{4, 5, 6, 7, 8});
     }
 }
