@@ -16,6 +16,7 @@ package com.leisure;
  * -106 <= nums1[i], nums2[i] <= 106
  */
 public class Algorithm_4_LeetCode {
+
     /**
      * 首先不考虑时间复杂度，使用两个有序数组排序合并的方法求出中位数,不能达到题目的要求
      * 时间复杂度 O(m + n)   空间复杂度（m + n）
@@ -24,7 +25,7 @@ public class Algorithm_4_LeetCode {
      * @param nums2 数组2
      * @return 中位数
      */
-    public static double MyFindMedianSortedArrays(int[] nums1, int[] nums2) {
+    public static double MyFindMedianSortedArrays1(int[] nums1, int[] nums2) {
         int nums1Length = nums1.length;
         int nums2Length = nums2.length;
         // 创建一个可以容纳两个小数组的大数组
@@ -78,12 +79,14 @@ public class Algorithm_4_LeetCode {
 
     /**
      * 我自己实现的代码
+     * 时间复杂度O(n+m) 空间复杂度 O(1)
      * 使用数组下标移动的方法求出中位数，不使用数组合并方法
+     * 不足的地方，循环因该考虑到最后的一种情况，可以使用变量将倒数第二变量存取下来
      * @param nums1 数组1
      * @param nums2 数组2
      * @return 中位数
      */
-    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    public static double MyFindMedianSortedArrays2(int[] nums1, int[] nums2) {
         //计算出中位数的位置
         int medianIndex = (nums1.length + nums2.length + 1) / 2 - 1;
         //创建数组的两个下标用于移动
@@ -137,8 +140,76 @@ public class Algorithm_4_LeetCode {
         }
     }
 
+    /**
+     * 现在需要考虑题目所给的时间复杂度了
+     * 所以需要使用二分查找法，来进行
+     * 查找 中位数 我们可以将起看成查找第K小的数
+     * 这里K又分为两种情况，第一种情况，当 nums1.length + nums2.length 的长度为偶数时，这时就有 两个 K 需要求出来然后除以2
+     *                   第二种情况，当 nums1.length + nums2.length 的长度为奇数时，这时就有 一个 K 需要求出来。
+     * 偶数时(K表示是在数组中的下标)  K1 = (nums1.length + nums2.length) / 2 - 1, K2 = (nums1.length + nums2.length) / 2
+     * 奇数时(K表示是在数组中的下标)  K = (nums1.length + nums2.length)  / 2
+     * @param nums1 数组1
+     * @param nums2 数组2
+     * @return 中位数
+     */
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2){
+        int k1 = (nums1.length + nums2.length)  / 2 - 1;
+        int k2 = (nums1.length + nums2.length)  / 2;
+
+        if ((nums1.length + nums2.length) % 2 == 0){
+            return (findMinimumTheKth(nums1,nums2,k1) + findMinimumTheKth(nums1, nums2, k2)) / 2.0;
+        }else {
+            return findMinimumTheKth(nums1,nums2,k1);
+        }
+    }
+
+    /**
+     *
+     * @param nums1 数组
+     * @param nums2 数组
+     * @param k 第k小的数
+     * @return 数
+     */
+    public static int findMinimumTheKth(int[] nums1, int[] nums2, int k){
+        //创建两个下标用于在两个数组中移动
+        int n1 = 0, n2 = 0;
+        int half = -1;
+        while (k != 0 ){
+            half = k / 2;
+            k = k - half;
+
+
+            if (nums1.length <= half){
+                if (nums1[nums1.length - 1] > nums2[half]){
+                    n2 = n2 + half + 1;
+                    continue;
+                }else {
+                    n2 = n2 + (k - nums1.length);
+                    return nums2[n2];
+                }
+            }else if (nums2.length <= half){
+                if (nums1[half] < nums2[nums2.length - 1]){
+                    n1 = n1 + half + 1;
+                    continue;
+                }else {
+                    n1 = n1 + (k - nums1.length);
+                    return nums2[n1];
+                }
+            }
+
+            if (nums1[n1] < nums2[n2]){
+                n1 = n1 + half + 1;
+            }else {
+                n2 = n2 + half + 1;
+            }
+
+
+        }
+        return Math.min(nums1[n1], nums2[n2]);
+    }
+
 
     public static void main(String[] args) {
-        findMedianSortedArrays(new int[]{1, 2},new int[]{-1, 3});
+        findMedianSortedArrays(new int[]{1, 2},new int[]{3,4});
     }
 }
