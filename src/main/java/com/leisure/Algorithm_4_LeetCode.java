@@ -250,6 +250,6 @@ public class Algorithm_4_LeetCode {
 
 
     public static void main(String[] args) {
-        findMedianSortedArrays(new int[]{1,2, 3},new int[]{4, 5, 6, 7, 8});
+        findMedianSortedArrays(new int[]{1,2, 3},new int[]{4, 5, 6, 7});
     }
 }
