@@ -289,50 +289,90 @@ public class Algorithm_4_LeetCode {
         //两个数组的分割线
         int nums1DividerLine;
         int nums2DividerLine;
+        // 防止出现空数组
+        if(nums1.length == 0){
+            if(nums2.length % 2 == 0){
+                return (nums2[nums2.length / 2 - 1] + nums2[nums2.length / 2]) / 2.0;
+            }else {
+                return nums2[nums2.length / 2];
+            }
+        }
+        if(nums2.length == 0){
+            if(nums1.length % 2 == 0){
+                return (nums1[nums1.length / 2 - 1] + nums1[nums1.length / 2]) / 2.0;
+            }else {
+                return nums1[nums1.length / 2];
+            }
+        }
+        //确保nums1数组长度最小
+        if(nums1.length > nums2.length){
+            return findMedianSortedArrays(nums2, nums1);
+        }
         while (true){
             //重新移动数组分割线
             nums1DividerLine = (num1startPoint + num1EndPoint) / 2;
             nums2DividerLine = (nums1.length + nums2.length + 1) / 2 - nums1DividerLine;
             //特殊条件1
-            if(nums1DividerLine == 0 && nums2DividerLine != nums2.length){
+            if(nums1DividerLine == 0 && nums2DividerLine != nums2.length) {
+                if(nums1[nums1DividerLine] < nums2[nums2DividerLine - 1]) nums1DividerLine ++; nums2DividerLine --;
                 if((nums1.length + nums2.length) % 2 == 0){
-                    return (Math.min(nums1[nums1DividerLine], nums2[nums2DividerLine]) + result1) / 2;
+                    return (Math.min(nums1[nums1DividerLine], nums2[nums2DividerLine]) + nums2[nums2DividerLine - 1]) / 2.0;
+                }else {
+                    return Math.max(nums1[nums1DividerLine], nums2[nums2DividerLine]);
+                }
+            }
+            //特殊条件2
+            if(nums1DividerLine == 0 && nums2DividerLine == nums2.length){
+                if (nums1[nums1DividerLine] < nums2[nums2DividerLine - 1])  nums1DividerLine++; nums2DividerLine --;
+                if((nums1.length + nums2.length) % 2 == 0){
+                    return (nums1[nums1DividerLine] + nums2[nums2DividerLine - 1]) / 2.0;
+                }else {
+                    return nums2[nums2DividerLine - 1];
+                }
+            }
+            //特殊条件3
+            if(nums1DividerLine == nums1.length && nums2DividerLine == 0){
+                if (nums1[nums1DividerLine -1] > nums2[nums2DividerLine]) nums1DividerLine--; nums1DividerLine++;
+                if((nums1.length + nums2.length) % 2 == 0){
+                    return (nums1[nums1DividerLine - 1] + nums2[nums2DividerLine]) / 2.0;
+                }else {
+                    return nums1[nums1DividerLine - 1];
+                }
+            }
+            //特殊条件4
+            if(nums1DividerLine == nums1.length && nums2DividerLine != 0){
+                if (nums1[nums1DividerLine - 1] > nums2[nums2DividerLine]) nums1DividerLine--; nums1DividerLine++;
+                if((nums1.length + nums2.length) % 2 == 0){
+                    return (Math.max(nums1[nums1DividerLine - 1], nums2[nums1DividerLine - 1]) + nums2[nums2DividerLine]) / 2.0;
+                }else {
+                    return Math.max(nums1[nums1DividerLine - 1], nums2[nums2DividerLine - 1]);
+                }
+            }
+
+            //条件5 nums1DividerLine 在区间 1 ~ nums1.length - 1 和 nums2DividerLine 在区间 1 ~ nums2.length -
+            if(nums1[nums1DividerLine - 1] <=  nums2[nums2DividerLine] && nums1[nums1DividerLine] >= nums2[nums2DividerLine - 1]){
+                if((nums1.length + nums2.length) % 2 == 0){
+                    return (Math.max(nums1[nums1DividerLine - 1], nums2[nums2DividerLine - 1]) + Math.min(nums1[nums1DividerLine], nums2[nums2DividerLine])) / 2.0;
+                }else {
+                    return Math.max(nums1[nums1DividerLine - 1], nums2[nums2DividerLine - 1]);
                 }
             }
 
             //nums1分割线左移
             if (nums1[nums1DividerLine - 1] > nums2[nums2DividerLine]){
-                num1EndPoint = nums1DividerLine;
+                num1EndPoint = nums1DividerLine - 1;
             }
             //nums1分割线右移
             if(nums1[nums1DividerLine] < nums2[nums2DividerLine - 1]){
-                num1startPoint = nums1DividerLine;
+                num1startPoint = nums1DividerLine + 1;
             }
         }
 
-
-        return 0;
-    }
-
-    /**
-     * 这个方法需要将时间复杂度控制在O(log (n)) n 是数组最小的长度
-     * 1、如果需要实现这个方法，需要在两个数组中设置两个分割线，这两个分割线都是可以左右移动的，当两个分割线的左边的数都小于右边的数。
-     * 2、以数组长度最小的为操作对象，统一规定分割线 1 表示 在数组nums[1]的后面
-     * @param nums1 数组1
-     * @param nums2 数组2
-     * @return 中位数
-     */
-    public  static double findMedianSortedArrays(int[] nums1, int[] nums2){
-        if (nums1 )
-        //设定两个分割线
-
-
-        return 0;
     }
 
 
     public static void main(String[] args) {
-        System.out.println(findMedianSortedArrays(new int[]{1,2, 3},new int[]{4, 5, 6, 7}));
+        System.out.println(findMedianSortedArrays(new int[]{2},new int[]{1, 3}));
 
     }
 }
