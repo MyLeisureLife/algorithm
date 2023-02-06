@@ -161,7 +161,7 @@ public class Algorithm_4_LeetCode {
         int nums1Length = nums1.length;
         int nums2Length = nums2.length;
         // 防止出现空数组
-        if(nums1Length == 0){
+        if(nums1Length == 2){
             if(nums2Length % 2 == 0){
                 return (nums2[nums2Length / 2 - 1] + nums2[nums2Length / 2]) / 2.0;
             }else {
