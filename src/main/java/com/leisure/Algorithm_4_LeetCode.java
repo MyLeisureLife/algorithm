@@ -175,7 +175,6 @@ public class Algorithm_4_LeetCode {
                 return nums1[nums1Length / 2];
             }
         }
-
         int k1 = (nums1Length + nums2Length + 1)  / 2;
         int k2 = (nums1Length + nums2Length + 2)  / 2;
 
@@ -248,6 +247,72 @@ public class Algorithm_4_LeetCode {
         return Math.min(nums1[n1], nums2[n2]);
     }
 
+    /**
+     * 目的：将时间复杂度给降低到O(log (n))  n:数组长度最小的数组
+     * 解释：可以使用两个分割线来分割两个数组，只要保证nums1数组分割线的右边的第一个数 大于 nums2数组分割线的左边的
+     *      第一个数且nums1数组分割线的左边的第一个数小于nums2数组分割线的右边的第一个数。且nums1 和 nums2分割线
+     *      的左右两遍数相加个数应该是 nums1LeftNumber + nums2LeftNumber >= nums1RightNumber + nums2RightNumber
+     *      分割线 = 0 表示 分割线左边是没有数的。  分割线 = nums.length 表示 分割线右边是没有数的。
+     *      分割线的位置的情况(默认nums1.length <= nums2.length)，这样只能出现5种情况
+     *      特殊1、nums1DividerLine == 0 和 nums2DividerLine ！= nums2.length
+     *      特殊2、nums1DividerLine == 0 和 nums2DividerLine == nums2.length
+     *      特殊3、nums1DividerLine == nums1.length 和 nums2DividerLine == 0
+     *      特殊4、nums1DividerLine == nums1.length 和 nums2DividerLine ！= 0
+     *      5、nums1DividerLine 在区间 1 ~ nums1.length - 1 和 nums2DividerLine 在区间 1 ~ nums2.length - 1
+     *      如何确认分割线位置，
+     *      1、如果nums1DividerLine = 0 那 nums2DividerLine = (nums1.length + nums2.length + 1) / 2 - nums1DividerLine
+     *      如何移动分界线位置:
+     *      nums1[nums1DividerLine - 1]  nums1[nums1DividerLine] nums2[nums2DividerLine - 1]  nums2[nums2DividerLine]
+     *      可以返回结果的条件：nums1[nums1DividerLine - 1] <=  nums2[nums2DividerLine] && nums1[nums1DividerLine] >= nums2[nums2DividerLine - 1]
+     *      左移动条件：nums1[nums1DividerLine - 1] > nums2[nums2DividerLine]
+     *      右移动条件：nums1[nums1DividerLine] < nums2[nums2DividerLine - 1]
+     *      数组1左移动规矩 ：使用二分发进行移动
+     *      num1startPoint = 0
+     *      num1endPoint = nums1.length
+     *      nums1DividerLine = (num1startPoint + num1endPoint) / 2
+     *      num1endPoint = nums1DividerLine
+     *      数组1右边移动规矩 ：
+     *      num1startPoint = nums1DividerLine
+     *      数组2移动规矩:
+     *      nums2DividerLine = (nums1.length + nums2.length + 1) / 2 - nums1DividerLine
+
+     *      结果分为两种情况：一、nums1.length + nums2.length % 2 == 0  二、nums1.length + nums2.length % 2 ！= 0
+     *      结果一 ：result1 = Math.Min(nums1[nums1DividerLine - 1], nums2[nums2DividerLine - 1])
+     *      结果二： result2 = (Math.Min(nums1[nums1DividerLine], nums2[nums2DividerLine]) + result1) / 2
+     * @param nums1 数组1
+     * @param nums2 数组2
+     * @return 中位数
+     */
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2){
+        //用于nums1分割线位置移动
+        int num1startPoint = 0, num1EndPoint = nums1.length;
+        //两个数组的分割线
+        int nums1DividerLine;
+        int nums2DividerLine;
+        while (true){
+            //重新移动数组分割线
+            nums1DividerLine = (num1startPoint + num1EndPoint) / 2;
+            nums2DividerLine = (nums1.length + nums2.length + 1) / 2 - nums1DividerLine;
+            //特殊条件1
+            if(nums1DividerLine == 0 && nums2DividerLine != nums2.length){
+                if((nums1.length + nums2.length) % 2 == 0){
+                    return (Math.min(nums1[nums1DividerLine], nums2[nums2DividerLine]) + result1) / 2;
+                }
+            }
+
+            //nums1分割线左移
+            if (nums1[nums1DividerLine - 1] > nums2[nums2DividerLine]){
+                num1EndPoint = nums1DividerLine;
+            }
+            //nums1分割线右移
+            if(nums1[nums1DividerLine] < nums2[nums2DividerLine - 1]){
+                num1startPoint = nums1DividerLine;
+            }
+        }
+
+
+        return 0;
+    }
 
     /**
      * 这个方法需要将时间复杂度控制在O(log (n)) n 是数组最小的长度
@@ -267,6 +332,7 @@ public class Algorithm_4_LeetCode {
 
 
     public static void main(String[] args) {
-        findMedianSortedArrays(new int[]{1,2, 3},new int[]{4, 5, 6, 7});
+        System.out.println(findMedianSortedArrays(new int[]{1,2, 3},new int[]{4, 5, 6, 7}));
+
     }
 }
