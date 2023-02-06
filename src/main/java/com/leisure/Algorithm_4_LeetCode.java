@@ -157,7 +157,7 @@ public class Algorithm_4_LeetCode {
      * @param nums2 数组2
      * @return 中位数
      */
-    public static double findMedianSortedArrays(int[] nums1, int[] nums2){
+    public static double MyFindMedianSortedArrays3(int[] nums1, int[] nums2){
         int nums1Length = nums1.length;
         int nums2Length = nums2.length;
         // 防止出现空数组
@@ -246,6 +246,23 @@ public class Algorithm_4_LeetCode {
             return nums1[n1];
         }
         return Math.min(nums1[n1], nums2[n2]);
+    }
+
+
+    /**
+     * 这个方法需要将时间复杂度控制在O(log (n)) n 是数组最小的长度
+     * 1、如果需要实现这个方法，需要在两个数组中设置两个分割线，这两个分割线都是可以左右移动的，当两个分割线的左边的数都小于右边的数。
+     * 2、以数组长度最小的为操作对象，统一规定分割线 1 表示 在数组nums[1]的后面
+     * @param nums1 数组1
+     * @param nums2 数组2
+     * @return 中位数
+     */
+    public  static double findMedianSortedArrays(int[] nums1, int[] nums2){
+        if (nums1 )
+        //设定两个分割线
+
+
+        return 0;
     }
 
 
