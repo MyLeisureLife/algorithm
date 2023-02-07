@@ -277,8 +277,11 @@ public class Algorithm_4_LeetCode {
      *      nums2DividerLine = (nums1.length + nums2.length + 1) / 2 - nums1DividerLine
 
      *      结果分为两种情况：一、nums1.length + nums2.length % 2 == 0  二、nums1.length + nums2.length % 2 ！= 0
-     *      结果一 ：result1 = Math.Min(nums1[nums1DividerLine - 1], nums2[nums2DividerLine - 1])
-     *      结果二： result2 = (Math.Min(nums1[nums1DividerLine], nums2[nums2DividerLine]) + result1) / 2
+     *      结果一 ：result1 = Math.max(nums1[nums1DividerLine - 1], nums2[nums2DividerLine - 1])
+     *      结果二： result2 = (Math.min(nums1[nums1DividerLine], nums2[nums2DividerLine]) + result1) / 2
+     *
+     *      总结：当不满足特殊情况时，可以移动num1startPoint num1EndPoint位置然后跳出一次循环再来判断
+     *      缺点：代码不够简洁
      * @param nums1 数组1
      * @param nums2 数组2
      * @return 中位数
@@ -312,18 +315,19 @@ public class Algorithm_4_LeetCode {
             //重新移动数组分割线
             nums1DividerLine = (num1startPoint + num1EndPoint) / 2;
             nums2DividerLine = (nums1.length + nums2.length + 1) / 2 - nums1DividerLine;
+
             //特殊条件1
             if(nums1DividerLine == 0 && nums2DividerLine != nums2.length) {
-                if(nums1[nums1DividerLine] < nums2[nums2DividerLine - 1]) nums1DividerLine ++; nums2DividerLine --;
+                if(nums1[nums1DividerLine] < nums2[nums2DividerLine - 1]) {num1startPoint++; continue;}
                 if((nums1.length + nums2.length) % 2 == 0){
                     return (Math.min(nums1[nums1DividerLine], nums2[nums2DividerLine]) + nums2[nums2DividerLine - 1]) / 2.0;
                 }else {
-                    return Math.max(nums1[nums1DividerLine], nums2[nums2DividerLine]);
+                    return nums2[nums2DividerLine - 1];
                 }
             }
             //特殊条件2
             if(nums1DividerLine == 0 && nums2DividerLine == nums2.length){
-                if (nums1[nums1DividerLine] < nums2[nums2DividerLine - 1])  nums1DividerLine++; nums2DividerLine --;
+                if (nums1[nums1DividerLine] < nums2[nums2DividerLine - 1])  {num1startPoint++; continue;}
                 if((nums1.length + nums2.length) % 2 == 0){
                     return (nums1[nums1DividerLine] + nums2[nums2DividerLine - 1]) / 2.0;
                 }else {
@@ -332,7 +336,7 @@ public class Algorithm_4_LeetCode {
             }
             //特殊条件3
             if(nums1DividerLine == nums1.length && nums2DividerLine == 0){
-                if (nums1[nums1DividerLine -1] > nums2[nums2DividerLine]) nums1DividerLine--; nums1DividerLine++;
+                if (nums1[nums1DividerLine -1] > nums2[nums2DividerLine]) {num1startPoint--;  continue;}
                 if((nums1.length + nums2.length) % 2 == 0){
                     return (nums1[nums1DividerLine - 1] + nums2[nums2DividerLine]) / 2.0;
                 }else {
@@ -341,9 +345,9 @@ public class Algorithm_4_LeetCode {
             }
             //特殊条件4
             if(nums1DividerLine == nums1.length && nums2DividerLine != 0){
-                if (nums1[nums1DividerLine - 1] > nums2[nums2DividerLine]) nums1DividerLine--; nums1DividerLine++;
+                if (nums1[nums1DividerLine - 1] > nums2[nums2DividerLine]) {num1startPoint--; continue;}
                 if((nums1.length + nums2.length) % 2 == 0){
-                    return (Math.max(nums1[nums1DividerLine - 1], nums2[nums1DividerLine - 1]) + nums2[nums2DividerLine]) / 2.0;
+                    return (Math.max(nums1[nums1DividerLine - 1], nums2[nums2DividerLine - 1]) + nums2[nums2DividerLine]) / 2.0;
                 }else {
                     return Math.max(nums1[nums1DividerLine - 1], nums2[nums2DividerLine - 1]);
                 }
@@ -372,7 +376,7 @@ public class Algorithm_4_LeetCode {
 
 
     public static void main(String[] args) {
-        System.out.println(findMedianSortedArrays(new int[]{2},new int[]{1, 3}));
+        System.out.println(findMedianSortedArrays(new int[]{1},new int[]{2, 3,4, 5, 6}));
 
     }
 }
