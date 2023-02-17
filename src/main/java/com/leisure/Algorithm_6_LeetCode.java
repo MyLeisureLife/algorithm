@@ -27,47 +27,34 @@ public class Algorithm_6_LeetCode {
      */
     public static String convert(String s, int numRows) {
         //边界处理
-        if (numRows < 3) { return  s;}
+        if (numRows < 2) { return  s;}
         //创建模型
-        boolean[][] mode = new boolean[numRows][numRows - 1];
-        for (int i = 0; i < numRows; i++) {
-            mode[i][0] = true;
-            for (int j = i; j < numRows - 1; j++) {
-                if (i == j){
-                    mode[i][j] = true;
-                }
-            }
-        }
-        char[][] chars = new char[numRows][s.length()];
-        // 用于循环整个字符串
-        int i = 0;
-        //用于判读是否超出了模型的列
-        int col = 0;
-        //使用模型填充字符
-        while (i < chars.length){
-            if (col == numRows - 1) { col = 0;}
+        char[][] mode = new char[numRows][s.length()];
+        int a = 0;
+        for (int i = 0; i < mode[0].length; i++) {
             for (int j = 0; j < numRows; j++) {
-                if (mode[j][0]){
-                    chars[j][0] = s.charAt(i);
-                    i ++;
+                if ((i % (numRows - 1) + j) == (numRows - 1) || i % (numRows - 1) == 0){
+                    if (a < s.length()){
+                        mode[j][i] = s.charAt(a);
+                        a ++;
+                    }
                 }
             }
-            col ++;
         }
-
-        for (char[] a: chars) {
-            for (char b : a) {
+        StringBuffer a1 = new StringBuffer();
+        for (char[] c: mode) {
+            for (char b : c) {
                 if (b != 0){
-                    System.out.print(b);
+                    a1.append(b);
                 }
             }
         }
 
-        return "";
+        return a1.toString();
     }
 
     public static void main(String[] args) {
-        convert( "123456789", 4);
+        System.out.println(convert( "123456789", 4));
     }
 }
 
