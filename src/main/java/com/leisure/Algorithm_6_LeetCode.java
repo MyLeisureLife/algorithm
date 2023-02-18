@@ -18,14 +18,18 @@ package com.leisure;
  *
  */
 public class Algorithm_6_LeetCode {
+
     /**
      * 使用模型的方式来实现则会个方法
+     * 时间复杂度O（n * numRows） 空间复杂度（n * numRows）
      *
-     * @param s
-     * @param numRows
-     * @return
+     * 缺点：占用大量的未使用空间，导致内存的浪费
+     *
+     * @param s 字符串
+     * @param numRows 行数
+     * @return 结果
      */
-    public static String convert(String s, int numRows) {
+    public static String myConvert1(String s, int numRows) {
         //边界处理
         if (numRows < 2) { return  s;}
         //创建模型
@@ -51,6 +55,56 @@ public class Algorithm_6_LeetCode {
         }
 
         return a1.toString();
+    }
+
+    /**
+     * 解题思路：使用StringBuffer来去掉重复的空间
+     * 时间复杂度O（n） 空间复杂度O（n）
+     * @param s 字符串
+     * @param numRows 行数
+     * @return 结果
+     */
+    public static String myConvert2(String s, int numRows){
+        //边界处理
+        if (numRows < 2) { return  s;}
+        //设置numRows个StringBuffer
+        StringBuffer[] stringBuffers = new StringBuffer[numRows];
+        //初始化每个StringBuffer
+        for (int i = 0; i < numRows; i++) {
+            stringBuffers[i] = new StringBuffer();
+        }
+        //遍历字符串
+        for (int i = 0; i < s.length(); i++) {
+            //用于辅助判断存储方式
+            int j = i % (numRows - 1);
+            int m = i / (numRows - 1);
+
+            if (m % 2 == 0){
+                //从上到下的方法存储
+                stringBuffers[j].append(s.charAt(i));
+            }else {
+                //从下到上的方式存储
+                stringBuffers[numRows - 1 - j].append(s.charAt(i));
+            }
+
+        }
+
+        //将全部类容存储到stringBuffers[0]上，然后用于输出结果
+        for (int i = 1; i < numRows; i++) {
+            stringBuffers[0].append(stringBuffers[i].toString());
+        }
+
+        return stringBuffers[0].toString();
+    }
+
+    /**
+     * 使用寻找特殊规律的方式来求解，可以降低空间复杂度。
+     * @param s 字符串
+     * @param numRows 行数
+     * @return 结果
+     */
+    public static  String convert(String s, int numRows){
+        return "";
     }
 
     public static void main(String[] args) {
