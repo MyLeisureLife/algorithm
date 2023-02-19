@@ -99,12 +99,31 @@ public class Algorithm_6_LeetCode {
 
     /**
      * 使用寻找特殊规律的方式来求解，可以降低空间复杂度。
+     * 时间复杂度：O(n) 空间复杂度（1）
+     * 难点：很难发现数学公式
      * @param s 字符串
      * @param numRows 行数
      * @return 结果
      */
     public static  String convert(String s, int numRows){
-        return "";
+        if (numRows == 1 || numRows > s.length()){return s;}
+
+        //循环周期 cyc
+        int cyc = 2 * numRows - 2;
+
+        //接受结果
+        StringBuilder stringBuffer = new StringBuilder();
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j + i< s.length(); j = j + cyc) {
+                stringBuffer.append(s.charAt(i + j));
+                // 0 < i && i < (numRows - 1) 这个条件是用于跳出第一行和最后一行的    j + cyc - i < s.length() 这个是用于判断后面是否存在第二个数
+                if (0 < i && i < (numRows - 1) && j + cyc - i < s.length()){
+                    stringBuffer.append(s.charAt(j + cyc - i));
+                }
+            }
+        }
+
+        return stringBuffer.toString();
     }
 
     public static void main(String[] args) {
