@@ -12,21 +12,69 @@ package com.leisure;
  */
 public class Algorithm_7_LeetCode {
 
-    public int reverse(int x) {
+    public static int reverse(int x) {
+
         //存放结果
-        int res = 0;
-        //余数
-        int remainder = 0;
+        String s = Integer.toString(x);
+        StringBuffer reS = new StringBuffer();
         //商
-        int s = 0;
-        while (x > 10){
-            remainder = x % 10;
-
-
-
+        for (int i = s.length() - 1 ; i >= 0; i--) {
+            reS.append(s.charAt(i));
         }
-        res = x;
+        s = reS.toString();
 
-        return res;
+
+
+        if (isAMax(s)) {
+
+
+            int integer;
+            if (x < 0) {
+                integer = Integer.parseInt(s.substring(0, s.length() - 1));
+                integer = -integer;
+
+            }else {
+                integer = Integer.parseInt(s.substring(0, s.length()));
+            }
+            return integer;
+
+        }else {
+            return 0;
+        }
+    }
+
+    public static boolean isAMax(String a){
+        String max = String.valueOf((int)(Math.pow(2,31) - 1));
+        String min = String.valueOf((int)Math.pow(2,31));
+        if (a.length() < max.length()){
+            return true;
+        }
+
+        if (a.charAt(a.length() - 1) == '-'){
+            for (int i = 0; i < a.length() - 1; i++) {
+                int aInt = Integer.parseInt(String.valueOf(a.charAt(i)));
+                int bInt = Integer.parseInt(String.valueOf(min.charAt(i)));
+                if (aInt == bInt){
+                    continue;
+                }
+                if (i == a.length() -1){return true;}
+                return aInt < bInt;
+            }
+        }else {
+            for (int i = 0; i < a.length(); i++) {
+                int aInt = Integer.parseInt(String.valueOf(a.charAt(i)));
+                int bInt = Integer.parseInt(String.valueOf(max.charAt(i)));
+                if (aInt == bInt){
+                    continue;
+                }
+                if (i == a.length() -1){return true;}
+                return aInt < bInt;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        reverse(-214748364);
     }
 }
