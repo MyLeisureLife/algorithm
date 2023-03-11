@@ -12,69 +12,25 @@ package com.leisure;
  */
 public class Algorithm_7_LeetCode {
 
+    /**
+     * 出现问题，需要考虑到传入的数的取值范围。
+     * @param x 操作数
+     * @return 结果
+     */
     public static int reverse(int x) {
-
-        //存放结果
-        String s = Integer.toString(x);
-        StringBuffer reS = new StringBuffer();
-        //商
-        for (int i = s.length() - 1 ; i >= 0; i--) {
-            reS.append(s.charAt(i));
-        }
-        s = reS.toString();
-
-
-
-        if (isAMax(s)) {
-
-
-            int integer;
-            if (x < 0) {
-                integer = Integer.parseInt(s.substring(0, s.length() - 1));
-                integer = -integer;
-
-            }else {
-                integer = Integer.parseInt(s.substring(0, s.length()));
+        int result = 0;
+        while (x != 0){
+            if (result < Integer.MIN_VALUE/10 || result > Integer.MAX_VALUE/10){
+                return 0;
             }
-            return integer;
-
-        }else {
-            return 0;
+            int remainder = x % 10;
+            x = x / 10;
+            result  =  result * 10 + remainder;
         }
-    }
-
-    public static boolean isAMax(String a){
-        String max = String.valueOf((int)(Math.pow(2,31) - 1));
-        String min = String.valueOf((int)Math.pow(2,31));
-        if (a.length() < max.length()){
-            return true;
-        }
-
-        if (a.charAt(a.length() - 1) == '-'){
-            for (int i = 0; i < a.length() - 1; i++) {
-                int aInt = Integer.parseInt(String.valueOf(a.charAt(i)));
-                int bInt = Integer.parseInt(String.valueOf(min.charAt(i)));
-                if (aInt == bInt){
-                    continue;
-                }
-                if (i == a.length() -1){return true;}
-                return aInt < bInt;
-            }
-        }else {
-            for (int i = 0; i < a.length(); i++) {
-                int aInt = Integer.parseInt(String.valueOf(a.charAt(i)));
-                int bInt = Integer.parseInt(String.valueOf(max.charAt(i)));
-                if (aInt == bInt){
-                    continue;
-                }
-                if (i == a.length() -1){return true;}
-                return aInt < bInt;
-            }
-        }
-        return false;
+        return result;
     }
 
     public static void main(String[] args) {
-        reverse(-214748364);
+        System.out.println(reverse(-214748364));
     }
 }
