@@ -1,4 +1,4 @@
-package com.leisure;
+package com.leisure.exercise;
 
 /**
  * Author: leisure1456

@@ -1,4 +1,4 @@
-package com.leisure;
+package com.leisure.exercise;
 
 
 import java.util.HashMap;
