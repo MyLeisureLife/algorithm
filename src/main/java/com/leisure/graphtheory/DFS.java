@@ -1,4 +1,6 @@
-package com.leisure.tree;
+package com.leisure.graphtheory;
+
+import javax.xml.soap.Node;
 
 /**
  * ClassName: DFS Depth-First Search 深度优先算法
@@ -11,5 +13,9 @@ package com.leisure.tree;
 public class DFS {
     public static void main(String[] args) {
         System.out.println("DFS1111s");
+    }
+
+    public DFS(Node root) {
+
     }
 }
