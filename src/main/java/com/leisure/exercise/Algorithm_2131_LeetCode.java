@@ -76,7 +76,7 @@ public class Algorithm_2131_LeetCode {
                     flag = true;
                 }
                 // 这里除以2的目的主要是为了去掉奇数的影响
-                ans += (count / 2) * 4;
+                ans += (count / 2) ;
                 //key.compareTo(reKey) > 0 的作用是防止重复使用map中的元素
             } else if (key.compareTo(reKey) > 0) {
                 ans += Math.min(map.getOrDefault(reKey, 0), count) * 4;
