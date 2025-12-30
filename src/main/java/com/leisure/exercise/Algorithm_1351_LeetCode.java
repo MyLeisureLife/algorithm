@@ -70,60 +70,6 @@ public class Algorithm_1351_LeetCode {
     }
 
 
-    /**
-     *  分治算法
-     * @param l
-     * @param r
-     * @param L
-     * @param R
-     * @param grid
-     * @return
-     */
-    private int solve(int l, int r, int L, int R, int[][] grid) {
-        if (l > r) {
-            return 0;
-        }
-
-        int mid = l + (r - l) / 2;
-        int pos = -1;
-        // 在当前行中查找第一个负数
-        for (int i = L; i <= R; i++) {
-            if (grid[mid][i] < 0) {
-                pos = i;
-                break;
-            }
-        }
-
-        int ans = 0;
-        if (pos != -1) {
-            // 当前行找到负数，计算当前行的负数个数
-            ans += grid[0].length - pos;
-            // 递归处理上半部分（使用更小的列范围）
-            ans += solve(l, mid - 1, pos, R, grid);
-            // 递归处理下半部分（使用相同的列起始范围）
-            ans += solve(mid + 1, r, L, pos, grid);
-        } else {
-            // 当前行没有负数，只需要递归处理下半部分
-            ans += solve(mid + 1, r, L, R, grid);
-        }
-        return ans;
-    }
-
-    public int countNegatives(int[][] grid) {
-        return solve(0, grid.length - 1, 0, grid[0].length - 1, grid);
-    }
-
-
-
-    public int countNegatives(int[][] grid) {
-
-        //使用二分法进行查找
-
-        // 查找行
-
-        return 0;
-    }
-
     public static void main(String[] args) {
         int i = new Algorithm_1351_LeetCode().binarySearchCountNegatives(new int[][]{{3, 2}, {1, 0}});
         System.out.println(i);
