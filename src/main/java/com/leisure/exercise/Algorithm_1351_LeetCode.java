@@ -1,7 +1,5 @@
 package com.leisure.exercise;
 
-import sun.applet.Main;
-
 /**
  * ClassName: Algorithm_1351_LeetCode
  * Package: com.leisure.exercise
@@ -134,9 +132,43 @@ public class Algorithm_1351_LeetCode {
         return ans;
     }
 
+    /**
+     * 倒序遍历算法 iterate in reverse order
+     * 从后面开始遍历
+     * 时间复杂度O(m + n) 空间复杂度O(1)
+     * @param grid 降序排列的二维数组
+     * @return 二维数组中的负数个数
+     */
+    public int optimalSolutionCountNegatives(int[][] grid) {
+        // 矩阵中的负数个数
+        int num = 0;
+
+        // 从最后一排的小标0号位置开始找
+        int pos = 0;
+
+        for(int i = grid.length - 1; i >= 0; i--){
+
+            // 寻找当前行递减到刚好小于0的位置
+            while (pos < grid[i].length) {
+
+                // 找到了该行小于0的位置了
+                if (grid[i][pos] < 0) break;
+
+                pos++;
+            }
+
+            //当pos大于最大坐标是就表明上面的全部是大于0的
+            if (pos > grid[i].length - 1) break;
+
+            // 计算当前行小于0的个数
+            num += grid[0].length - pos;
+        }
+
+        return num;
+    }
 
     public static void main(String[] args) {
-        int i = new Algorithm_1351_LeetCode().divideAndConquerCountNegatives(new int[][]{{3, 2, -1}, {1, 0, -2},{0, -1, -2}});
+        int i = new Algorithm_1351_LeetCode().optimalSolutionCountNegatives(new int[][]{{3, 2, 0}, {1, 0, -1},{0, 0, -2}});
         System.out.println(i);
     }
 }
