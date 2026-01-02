@@ -1,9 +1,6 @@
 package com.leisure.exercise;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * ClassName: Algorithm_961_LeetCode
@@ -80,5 +77,24 @@ public class Algorithm_961_LeetCode {
         }
         return -1;
     }
+
+    /**
+     * 随机算法 random algorithm
+     * 应为重复数据在数组中占据了一半，而且剩下的那一半都没有重复，所以可以使用随机算法
+     * 从数组中随机选两个数，选到有数字相同的数的概率是二分之一，如果两个都相同就是四分之一
+     * 这样理论上就只需要4次就可以找到相同的数字了
+     * 时间复杂度O(1) 空间复杂度O(1)
+     * @param nums 2n长度的数组
+     * @return 数组中重复n次的数字
+     */
+    public int randomRepeatedNTimes(int[] nums) {
+        Random rand = new Random();
+        while (true){
+            int i = rand.nextInt(nums.length);
+            int j = rand.nextInt(nums.length);
+            if (i != j && nums[i] == nums[j]) return nums[i];
+        }
+    }
+
 
 }
