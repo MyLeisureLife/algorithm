@@ -1,7 +1,9 @@
 package com.leisure.exercise;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * ClassName: Algorithm_961_LeetCode
@@ -37,8 +39,46 @@ public class Algorithm_961_LeetCode {
             if (map.get(num) == nums.length / 2) return num;
         }
 
-        return 0;
+        return -1;
     }
 
+    /**
+     * LeetCode Brute-force Algorithm
+     * 将问题简化为：找到数组中两个相同数字问题
+     * 时间复杂度O(n) 空间复杂度(n)
+     * @param nums 2n长度的数组
+     * @return 数组中重复n次的数字
+     */
+    public int LeetCodeBruteForceRepeatedNTimes(int[] nums) {
+        // 使用Set集合存储数字，利用Set集合中的元素不能重复特点
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums){
+            // 是否可以存入到set集合中去
+            boolean add = set.add(num);
+            // 当返回false不能存入的时候，就表明先前已经存入了
+            if (!add) return num;
+        }
+        // 特殊情况
+        return -1;
+    }
+
+    /**
+     * mathematical algorithm
+     * 使用数学方法来解决降低空间复杂度
+     * 应为题目给出的相同个数有n个占据数组的一半，所以他们的间隔方式必定有这
+     * 三种方式， 11 ， 101， 1001， 不可能出现全部是10001这种排列方式。
+     * 所以我们可以针对这三种排列方式遍历一次就行了，这样空间复杂度就降低了
+     * 时间复杂度O(n) 空间复杂度O(1)
+     * @param nums 2n长度的数组
+     * @return 数组中重复n次的数字
+     */
+    public int mathematicalAlgorithmRepeatedNTimes(int[] nums) {
+        for(int i=1; i < 4; i++){
+            for(int j = 0; j + i < nums.length; j++){
+                if (nums[j] == nums[j+i]) return nums[j];
+            }
+        }
+        return -1;
+    }
 
 }
