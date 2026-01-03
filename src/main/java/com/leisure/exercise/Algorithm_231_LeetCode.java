@@ -10,6 +10,7 @@ package com.leisure.exercise;
  * @Date: 2026/1/3:13:41:29 星期六
  */
 public class Algorithm_231_LeetCode {
+
     /**
      *  Brute-Force Algorithm
      *  时间复杂度O(log n) 空间复杂度O(1)
@@ -41,5 +42,18 @@ public class Algorithm_231_LeetCode {
         return n > 0 && (n & (n - 1)) == 0;
     }
 
+    /**
+     * 取巧算法 a clever algorithm
+     * 时间复杂度O(1)  空间复杂度(1)
+     * 这个算法是使用的除法没有第二使用位运算的快
+     * @param n 2的幂次方构成的数
+     * @return n是否是2的幂次方构成的数
+     */
+    public boolean isPowerOfTwo2(int n) {
+        //int类型最大存储的 2的幂次方构成的数
+        int max = 1 << 30;
+        // 如果n是max的约数那n也是 2的幂次方构成的数
+        return n > 0 && max % n == 0;
+    }
 
 }
