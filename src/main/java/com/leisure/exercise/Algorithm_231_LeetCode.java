@@ -29,4 +29,17 @@ public class Algorithm_231_LeetCode {
        return false;
     }
 
+    /**
+     * 位操作算法 bit manipulation algorithm
+     * 将n转换一个角度看，n转化为二进制时就可以发现二进制情况如果n是2的幂构成的函数，
+     * 那n这个转换为二进制时就只能存在一个1在二进制中
+     * 时间复杂度O(1) 空间复杂度O（1）
+     * @param n 2的幂次方构成的数
+     * @return n是否是2的幂次方构成的数
+     */
+    public boolean leetCodeIsPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+
+
 }
