@@ -35,7 +35,7 @@ public class Algorithm_1161_LeetCode {
      * 使用队列
      * 时间复杂度O(n)  空间复杂度(n) n:节点个数
      * @param root 树
-     * @return 每层和最大，层最小·
+     * @return 每层和最大，层最小
      */
     public int maxLevelSumBFS(TreeNode root) {
         // 层数
@@ -80,6 +80,52 @@ public class Algorithm_1161_LeetCode {
         }
 
        return ans;
+    }
+
+    // 层 :  下标 + 1    层节点和: treeLayers.get(层 - 1)
+    private final List<Integer> treeLayers = new ArrayList<>();
+
+    /**
+     * DFS Depth-First Search
+     * 深度优先算法
+     * 时间复杂度O(n)  空间复杂度(n) n:节点个数
+     * @param root 树
+     * @return 每层和最大，层最小
+     */
+    public int maxLevelSumDFS(TreeNode root) {
+        dfs(root, 0);
+        int level = 0;
+        for (int i = 0; i < treeLayers.size(); i++) {
+            if (treeLayers.get(i) > treeLayers.get(level)) {
+                level = i;
+            }
+        }
+        return level + 1;
+    }
+
+
+    /**
+     * Depth-First Search 深度优先搜索
+     * 注意这个算法要计算全部节点，所以这个就不需要回溯了
+     * @param root 根节点
+     * @param level 当前所在层
+     */
+    public void dfs(TreeNode root, int level) {
+        // 如果当前层等与treeLayers + 1 就可以添加一层
+        if (level == treeLayers.size()) {
+            treeLayers.add(root.val);
+        }else{
+            // 如果不需要添加一层，就需要在其他层 计算和
+            treeLayers.set(level, root.val + treeLayers.get(level));
+        }
+
+        // 递归开始
+        if (root.left != null) {
+            dfs(root.left, level + 1);
+        }
+        if (root.right != null) {
+            dfs(root.right, level + 1);
+        }
     }
 
 }
