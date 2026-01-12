@@ -65,6 +65,17 @@ public class Algorithm_85_LeetCode {
         return area;
     }
 
+    /**
+     * 暴力算法时间复杂度太大了，可以使用空间进行降低
+     * 柱状图的优化暴力方法
+     * @param matrix 矩阵
+     * @return 1最大矩形面积
+     */
+    public int maximalRectangle2(char[][] matrix) {
+        int maxArea = 0;
+        return 0;
+    }
+
     public static void main(String[] args) {
         int i = new Algorithm_85_LeetCode().maximalRectangle(
                 new char[][]{{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}});
