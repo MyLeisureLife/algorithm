@@ -57,7 +57,7 @@ public class Algorithm_1292_LeetCode {
     }
 
     /**
-     * 二维前缀和
+     * 二维前缀和 2D Prefix Sum
      * @param mat 矩阵
      * @param threshold 阀值
      * @return 最大边
