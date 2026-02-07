@@ -20,6 +20,7 @@ import java.util.Map;
  * @Date: 2026/2/6:19:12:23 星期五
  */
 public class Algorithm_3634_LeetCode {
+
     /**
      *  时间复杂度O(n log n) 空间复杂度O(log n)
      * @param nums 数组
@@ -36,17 +37,17 @@ public class Algorithm_3634_LeetCode {
         // 条件最小值乘以K被后应该小于等于最大值才行
         for (int i = 0; i < nums.length - 1; i++) {
             // 最大元素允许存在的位置
-            int position = getMiddle(nums, k, i);
-            if (position == -1) {
-                count = nums.length - 1 - i;
-                break;
+            int position = getPosition(nums, k, i);
+            if (position != i) {
+                // 后面就表示找到了,需要移除的个数
+                int i1 = i  + nums.length - (position + 1);
+                ans = Math.min(ans, i1);
             }
-            // 后面就表示找到了,需要移除的个数
-            int i1 = i  + nums.length - (position + 1);
-            ans = Math.min(ans, i1);
         }
-        if ( count != 0){
-            ans = Math.min(ans, count);
+
+        if ( ans == Integer.MAX_VALUE){
+            // 如果当前i没有符合的最大值时,就需要舍去除它以外的全部
+            ans = nums.length - 1;
         }
         return ans;
     }
@@ -78,10 +79,27 @@ public class Algorithm_3634_LeetCode {
         return -1;
     }
 
+    private static int getPosition(int[] nums,int k, int i) {
+        // 数组中最大允许存在的数
+        long  maxNum = (long) nums[i] * k;
+        int l = i + 1;
+        int r = nums.length - 1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            // 中点左移， 这里是不符合要求的
+            if ( nums[mid] > maxNum) {
+                r = mid - 1;
+            // 中点右移 , 下面是符合要求的，但是需要循环走完才能得到最终的
+            }else {
+                l = mid + 1;
+            }
+        }
+        return l - 1;
+    }
 
     public static void main(String[] args) {
         int i = new Algorithm_3634_LeetCode().minRemoval(
-                new int[]{2,12}, 2);
+                new int[]{33,6,19}, 1);
         System.out.println(i);
 
     }
