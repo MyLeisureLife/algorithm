@@ -18,7 +18,7 @@ import jdk.internal.util.xml.impl.ReaderUTF16;
 public class Algorithm_3713_LeetCode {
     /**
      * brute-force algorithm 暴力算法
-     * 时间复杂度O(n^3)  空间复杂度O(1)
+     * 时间复杂度O(n^2)  空间复杂度O(1)
      * @param s 字符串
      * @return 符合条件的最长子字符串
      */
