@@ -26,17 +26,17 @@ public class Algorithm_3129_LeetCode {
      * @return The number of items that satisfy all three conditions.
      */
     public int numberOfStableArrays(int zero, int one, int limit) {
-        final long MOD = 1000000007;
-        long[][] num_0 = new long[zero+1][one+1]; // num_0[i][j]表示 i个`0`和j个`1`能组成多少个最后一个元素是 0 的数量
-        long[][] num_1 = new long[zero+1][one+1]; // num_1[i][j]表示 i个`0`和j个`1`能组成多少个最后一个元素是 1 的数量
+        final int MOD = 1000000007;
+        int[][] num_0 = new int[zero+1][one+1]; // num_0[i][j]表示 i个`0`和j个`1`能组成多少个最后一个元素是 0 的数量
+        int[][] num_1 = new int[zero+1][one+1]; // num_1[i][j]表示 i个`0`和j个`1`能组成多少个最后一个元素是 1 的数量
         // 但有些0000000并不是我想要的，因为如果满足了limit + 1 个0就不是稳定二进制了。
-        for (int i = 0; i <= Math.min(zero, limit); i++){
+        for (int i = 1; i <= Math.min(zero, limit); i++){
             // 默认`1`为0个时，`O`的个数逐渐增加，但管你增加多个个`0`只可能构建出一个结构一样的000000没有1的协助不可能构建出01000
             //num_0[0][0] = 1; 是为了让以后的计算方便
             num_0[i][0] = 1;
         }
         // 但有些11111111并不是我想要的，因为如果满足了limit + 1 个1就不是稳定二进制了。
-        for (int i = 0; i <= Math.min(one, limit); i++){
+        for (int i = 1; i <= Math.min(one, limit); i++){
             // 默认`1`为0个时，`O`的个数逐渐增加，但管你增加多个个`0`只可能构建出一个结构一样的11111111没有0的协助不可能构建出01000
             num_1[0][i] = 1;
         }
@@ -48,7 +48,7 @@ public class Algorithm_3129_LeetCode {
                     // 这个就需要考虑不稳定情况了，需要减去不稳定的数量
                     // 不稳定的情况只有 最后limit个都是0 而且最后的limit + 1位置是1在这基础上在添加0才能导致不稳定。
                     // 所以我们只需要知道最后为1的表中，i-limit-1个为0，j个为1 的情况有多少个稳定的就行了
-                    num_0[i][j] = num_0[i - 1][j] + num_1[i - 1][j] - num_1[i - limit -  1][j] ;
+                    num_0[i][j] = num_0[i - 1][j] + num_1[i - 1][j] - num_1[i - limit - 1][j] ;
                 }else{
                     // 计算i个 0 和 j个1 结尾为0变化，
                     // 只需要将 i-1 个 0 和 j个1 结尾为0的情况个数 +   i-1 个 0 和 j个1 结尾为1的情况个数
@@ -62,7 +62,7 @@ public class Algorithm_3129_LeetCode {
 
                 // 计算结尾为1但是不稳定情况， 和上面为0的情况相反就可以了
                 if (j > limit){
-                    num_1[i][j] = num_0[i][j - 1] + num_1[i][j - 1] - num_0[i][j - limit -  1] ;
+                    num_1[i][j] = num_0[i][j - 1] + num_1[i][j - 1] - num_0[i][j - limit - 1] ;
                 }else {
                     // 计算结尾为1而且稳定的情况
                     num_1[i][j] = num_0[i][j  - 1] + num_1[i][j  - 1];
@@ -71,12 +71,12 @@ public class Algorithm_3129_LeetCode {
                 num_1[i][j] = (num_1[i][j]%MOD + MOD) % MOD;
             }
         }
-        return (int) ((num_0[zero][one] + num_1[zero][one]) % MOD);
+        return (num_0[zero][one] + num_1[zero][one]) % MOD;
     }
 
 
     public static void main(String[] args) {
-        int i = new Algorithm_3129_LeetCode().numberOfStableArrays(3, 3, 2);
+        int i = new Algorithm_3129_LeetCode().numberOfStableArrays(1, 4, 2);
         System.out.println(i);
     }
 }
